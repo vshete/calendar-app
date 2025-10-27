@@ -63,7 +63,6 @@ export const AgendaView: React.FC<AgendaViewProps> = ({ events, onEventClick }) 
             {dateEvents.map((event, index) => (
               <React.Fragment key={event._id}>
                 <ListItem
-                  button
                   onClick={() => onEventClick(event)}
                   sx={{
                     borderLeft: 4,

@@ -24,8 +24,16 @@ const eventSchema = new Schema<CalendarEvent>(
       type: Date,
       required: [true, 'End date is required'],
       validate: {
-        validator: function(this: CalendarEvent, value: Date) {
-          return value >= this.startDate;
+        validator: function (value: Date) {
+          // Retrieve the value of startDate
+          const startDate = this.get('startDate');
+
+          // Ensure both values are dates before comparing
+          if (!startDate || !(startDate instanceof Date) || !(value instanceof Date)) {
+            return false; // Or handle as appropriate if dates are mandatory
+          }
+
+          return value >= startDate;
         },
         message: 'End date must be after start date'
       }

@@ -8,7 +8,7 @@ import { format, addMonths } from 'date-fns';
 import { areDatesSame, getMonthDays, isDateInMonth, isDateToday } from '@/lib/utils/date';
 import { useCalendarContext } from '@/context/CalendarContext';
 
-export const MiniCalendar: React.FC = React.memo(() => {
+export const MiniCalendar: React.FC = () => {
   const { currentDate, setCurrentDate, selectedDate, setSelectedDate } = useCalendarContext();
   const [displayMonth, setDisplayMonth] = React.useState(currentDate);
   
@@ -108,4 +108,4 @@ export const MiniCalendar: React.FC = React.memo(() => {
       </Box>
     </Box>
   );
-});
+};

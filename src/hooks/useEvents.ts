@@ -25,7 +25,9 @@ export const useEvents = (startDate?: Date, endDate?: Date) => {
       mutate(); // Revalidate data
       return response.data.data;
     } catch (error) {
-      throw new Error(error.response?.data?.error || 'Failed to create event');
+      // ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      throw new Error((error as any).response?.data?.error || 'Failed to create event');
     }
   };
 
@@ -35,7 +37,9 @@ export const useEvents = (startDate?: Date, endDate?: Date) => {
       mutate(); // Revalidate data
       return response.data.data;
     } catch (error) {
-      throw new Error(error.response?.data?.error || 'Failed to update event');
+      // ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      throw new Error((error as any).response?.data?.error || 'Failed to update event');
     }
   };
 
@@ -44,7 +48,9 @@ export const useEvents = (startDate?: Date, endDate?: Date) => {
       await axios.delete(`/api/events/${id}`);
       mutate(); // Revalidate data
     } catch (error) {
-      throw new Error(error.response?.data?.error || 'Failed to delete event');
+      // ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      throw new Error((error as any).response?.data?.error || 'Failed to delete event');
     }
   };
 

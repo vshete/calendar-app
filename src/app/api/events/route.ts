@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Error fetching events:', error);
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: (error as Error).message },
       { status: 500 }
     );
   }
@@ -76,15 +76,15 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Error creating event:', error);
     
-    if (error.name === 'ValidationError') {
+    if ((error as Error).name === 'ValidationError') {
       return NextResponse.json(
-        { success: false, error: error.message },
+        { success: false, error: (error as Error).message },
         { status: 400 }
       );
     }
 
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: (error as Error).message },
       { status: 500 }
     );
   }

@@ -1,7 +1,7 @@
 // src/components/calendar/MonthView.tsx
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Box, Typography, Paper } from '@mui/material';
 import { format } from 'date-fns';
 import { CalendarEvent } from '@/types/event';
@@ -23,7 +23,7 @@ export const MonthView: React.FC<MonthViewProps> = ({
 }) => {
   const { currentDate, selectedDate } = useCalendarContext();
   const monthDays = getMonthDays(currentDate);
-  const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const weekDays = useMemo(() => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], []);
 
   return (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>

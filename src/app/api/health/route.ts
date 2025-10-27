@@ -15,7 +15,7 @@ export async function GET() {
       {
         success: false,
         message: 'Database connection failed',
-        error: error.message
+        error: (error as Error).message
       },
       { status: 503 }
     );

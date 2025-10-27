@@ -3,23 +3,18 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectDB from '@/lib/db/mongodb';
 import Event from '@/lib/db/models/Event';
 
-
-interface RouteContext {
-  params: {
-    id: string; // Matches the dynamic route segment: [id]
-  };
-}
-
-
 // GET /api/events/[id] - Get single event by ID
 export async function GET(
   request: NextRequest,
-  { params }: RouteContext  
+  // ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context: any
 ) {
   try {
     await connectDB();
+    const id = context.params.id;
 
-    const event = await Event.findById(params.id);
+    const event = await Event.findById(id);
 
     if (!event) {
       return NextResponse.json(
@@ -32,7 +27,7 @@ export async function GET(
   } catch (error) {
     console.error('Error fetching event:', error);
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: (error as Error).message },
       { status: 500 }
     );
   }
@@ -41,15 +36,19 @@ export async function GET(
 // PUT /api/events/[id] - Update event
 export async function PUT(
   request: NextRequest,
-  { params }: RouteContext
+  // ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context: any
 ) {
   try {
     await connectDB();
 
     const body = await request.json();
+
+    const id = context.params.id;
     
     const event = await Event.findByIdAndUpdate(
-      params.id,
+      id,
       body,
       { new: true, runValidators: true }
     );
@@ -61,19 +60,19 @@ export async function PUT(
       );
     }
 
-    return NextResponse.json({ success: true, data: event });
+    return NextResponse.json({ success: true, RouteContextdata: event });
   } catch (error) {
     console.error('Error updating event:', error);
     
-    if (error.name === 'ValidationError') {
+    if ((error as Error).name === 'ValidationError') {
       return NextResponse.json(
-        { success: false, error: error.message },
+        { success: false, error: (error as Error).message },
         { status: 400 }
       );
     }
 
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: (error as Error).message },
       { status: 500 }
     );
   }
@@ -82,12 +81,14 @@ export async function PUT(
 // DELETE /api/events/[id] - Delete event
 export async function DELETE(
   request: NextRequest,
-  { params }: RouteContext
+  // ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context: any
 ) {
   try {
     await connectDB();
 
-    const event = await Event.findByIdAndDelete(params.id);
+    const event = await Event.findByIdAndDelete(context.params.id);
 
     if (!event) {
       return NextResponse.json(
@@ -103,7 +104,7 @@ export async function DELETE(
   } catch (error) {
     console.error('Error deleting event:', error);
     return NextResponse.json(
-      { success: false, error: error.message },
+      { success: false, error: (error as Error).message },
       { status: 500 }
     );
   }

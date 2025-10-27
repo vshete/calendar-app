@@ -180,7 +180,7 @@ export const EventModal: React.FC<EventModalProps> = ({
           />
 
           <Grid container spacing={2} sx={{ mb: 2 }}>
-            <Grid item xs={6}>
+            <Grid>
               <TextField
                 fullWidth
                 label="Start Date"
@@ -191,7 +191,7 @@ export const EventModal: React.FC<EventModalProps> = ({
                 InputLabelProps={{ shrink: true }}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid>
               <TextField
                 fullWidth
                 label="Start Time"
@@ -206,7 +206,7 @@ export const EventModal: React.FC<EventModalProps> = ({
           </Grid>
 
           <Grid container spacing={2} sx={{ mb: 2 }}>
-            <Grid item xs={6}>
+            <Grid>
               <TextField
                 fullWidth
                 label="End Date"
@@ -217,7 +217,7 @@ export const EventModal: React.FC<EventModalProps> = ({
                 InputLabelProps={{ shrink: true }}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid>
               <TextField
                 fullWidth
                 label="End Time"

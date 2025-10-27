@@ -58,5 +58,5 @@ export const EVENT_COLORS = [
 ];
 
 export const getDefaultEventColor = (): string => {
-  return EVENT_COLORS;
+  return EVENT_COLORS[0];
 };
