@@ -8,8 +8,8 @@ import { format, addMonths } from 'date-fns';
 import { areDatesSame, getMonthDays, isDateInMonth, isDateToday } from '@/lib/utils/date';
 import { useCalendarContext } from '@/context/CalendarContext';
 
-export const MiniCalendar: React.FC = () => {
-  const { currentDate, setCurrentDate, selectedDate } = useCalendarContext();
+export const MiniCalendar: React.FC = React.memo(() => {
+  const { currentDate, setCurrentDate, selectedDate, setSelectedDate } = useCalendarContext();
   const [displayMonth, setDisplayMonth] = React.useState(currentDate);
   
   const monthDays = getMonthDays(displayMonth);
@@ -24,6 +24,7 @@ export const MiniCalendar: React.FC = () => {
   };
 
   const handleDateClick = (date: Date) => {
+    setSelectedDate(date);
     setCurrentDate(date);
   };
 
@@ -82,7 +83,7 @@ export const MiniCalendar: React.FC = () => {
 
           return (
             <Box
-              key={day.toString()}
+              key={day?.toString()}
               onClick={() => handleDateClick(day)}
               sx={{
                 aspectRatio: '1',
@@ -91,7 +92,7 @@ export const MiniCalendar: React.FC = () => {
                 justifyContent: 'center',
                 cursor: 'pointer',
                 borderRadius: 1,
-                bgcolor: isSelected ? 'primary.main' : isToday ? 'primary.light' : 'transparent',
+                bgcolor: isSelected ? 'green' : isToday ? 'primary.light' : 'transparent',
                 color: !isCurrentMonth ? 'text.disabled' : isSelected || isToday ? 'white' : 'text.primary',
                 '&:hover': {
                   bgcolor: isSelected ? 'primary.dark' : 'action.hover',
@@ -107,4 +108,4 @@ export const MiniCalendar: React.FC = () => {
       </Box>
     </Box>
   );
-};
+});

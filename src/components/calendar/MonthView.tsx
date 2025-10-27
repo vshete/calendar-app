@@ -6,7 +6,7 @@ import { Box, Typography, Paper } from '@mui/material';
 import { format } from 'date-fns';
 import { CalendarEvent } from '@/types/event';
 import { useCalendarContext } from '@/context/CalendarContext';
-import { getMonthDays, isDateInMonth, isDateToday } from '@/lib/utils/date';
+import { areDatesSame, getMonthDays, isDateInMonth, isDateToday } from '@/lib/utils/date';
 import { getEventsForDay } from '@/lib/utils/calendar';
 import { EventCard } from './EventCard';
 
@@ -21,7 +21,7 @@ export const MonthView: React.FC<MonthViewProps> = ({
   onDateClick,
   onEventClick,
 }) => {
-  const { currentDate } = useCalendarContext();
+  const { currentDate, selectedDate } = useCalendarContext();
   const monthDays = getMonthDays(currentDate);
   const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
@@ -68,6 +68,13 @@ export const MonthView: React.FC<MonthViewProps> = ({
           const dayEvents = getEventsForDay(events, day);
           const isCurrentMonth = isDateInMonth(day, currentDate);
           const isToday = isDateToday(day);
+          const isSelected = selectedDate ? areDatesSame(day, selectedDate) : false;
+
+          const getBackgroundColor = () => {
+            if (isSelected) return 'lightblue';
+            if (!isCurrentMonth) return 'action.hover';
+            return 'background.default';
+          }
 
           return (
             <Paper
@@ -79,7 +86,7 @@ export const MonthView: React.FC<MonthViewProps> = ({
                 borderColor: 'divider',
                 p: 1,
                 cursor: 'pointer',
-                bgcolor: !isCurrentMonth ? 'action.hover' : 'background.default',
+                bgcolor: getBackgroundColor(),
                 '&:hover': {
                   bgcolor: 'action.selected',
                 },
