@@ -1,7 +1,7 @@
 // src/components/calendar/MiniCalendar.tsx
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Box, Typography, IconButton } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { format, addMonths } from 'date-fns';
@@ -13,7 +13,7 @@ export const MiniCalendar: React.FC = () => {
   const [displayMonth, setDisplayMonth] = React.useState(currentDate);
   
   const monthDays = getMonthDays(displayMonth);
-  const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+  const weekDays = useMemo(() => ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'], []);
 
   const handlePrevMonth = () => {
     setDisplayMonth(prev => addMonths(prev, -1));
